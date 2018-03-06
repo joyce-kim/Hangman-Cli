@@ -62,9 +62,11 @@ function Hangman() {
 	    .then(function(val) {
 	    	// checks user guess using Word constructor's checkWord function
 			var guessedCorrectly = self.currentWord.checkWord(val.input);
+
 			if (guessedCorrectly) {
-				console.log("CORRECT!")
+				console.log("CORRECT!");
 				self.currentWord.display(); 
+				console.log("Guesses Remaining: " + self.guessCount);
 			} else {
 				console.log("WRONG!");
 				self.currentWord.display(); 
@@ -100,15 +102,14 @@ function Word(word) {
 	}
 
 	// checks each letter of the word for match
-	this.checkWord = (guess) => {
+	this.checkWord = guess => {
 		var guessedCorrectly = false;
 		this.letters.map( letter => {
 			if ( letter.checkLetter(guess)) {
 				guessedCorrectly = true;
-				letter.guessed = true;
 			}
-			return guessedCorrectly;
 		});
+		return guessedCorrectly;
 	}
 
 	// checks if all letters have been guessed
@@ -141,7 +142,7 @@ function Letter(letter) {
 	this.guessed = false;
 
 	// checks to see if input is equivalent to the letter
-	this.checkLetter = function(guess) {
+	this.checkLetter = guess => {
 		if (guess === letter) {
 			this.guessed = true;
 			this.state = this.value;
